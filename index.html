@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        /* Background gelap pekat kemerahan */
+        body {
+            background-color: #0a0005; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            position: relative; /* Penting untuk tombol musik absolut */
+        }
+
+        /* --- LAYAR TOMBOL MULAI --- */
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0a0005;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: opacity 1s ease;
+        }
+
+        #start-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: transparent;
+            color: #ff007f;
+            border: 2px solid #ff007f;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px #ff007f;
+            transition: all 0.3s ease;
+        }
+
+        #start-button:hover {
+            background-color: #ff007f;
+            color: white;
+            box-shadow: 0 0 30px #ff007f;
+            transform: scale(1.1);
+        }
+
+        /* --- TOMBOL KONTROL MUSIK (BARU) --- */
+        #music-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 0, 127, 0.2);
+            border: 1px solid #ff007f;
+            color: #ff007f;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 50;
+            opacity: 0; /* Sembunyikan di awal */
+            transition: all 0.3s ease;
+        }
+
+        #music-control:hover {
+            background: #ff007f;
+            color: white;
+            box-shadow: 0 0 15px #ff007f;
+        }
+
+        /* --- MAIN CONTENT --- */
+        #main-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; 
+            transition: opacity 1s ease;
+        }
+
+        .love-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 350px;
+            height: 350px;
+        }
+
+        /* --- ANIMASI LOVE --- */
+        .heart-container {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            z-index: 10; 
+        }
+
+        .heart-path {
+            fill: transparent; 
+            stroke: url(#pinkGradient); 
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 15px #ff007f);
+            stroke-dasharray: 300; 
+            stroke-dashoffset: 300; 
+        }
+
+        #main-content.start-anim .heart-path {
+            animation: 
+                drawOutline 3s ease-in-out forwards,
+                fillColor 2s ease-in-out 2.5s forwards;
+        }
+
+        #main-content.start-anim .heart-container {
+            animation: heartbeat 1.5s ease-in-out 4s infinite;
+        }
+
+        @keyframes drawOutline { to { stroke-dashoffset: 0; } }
+        @keyframes fillColor { to { fill: url(#pinkGradient); } }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px #ff007f); }
+            15% { transform: scale(1.15); filter: drop-shadow(0 0 30px #ff007f); }
+            30% { transform: scale(1); filter: drop-shadow(0 0 15px #ff007f); }
+            45% { transform: scale(1.15); filter: drop-shadow(0 0 30px #ff007f); }
+        }
+
+        /* --- SISTEM FOTO MENGORBIT --- */
+        .orbit-img {
+            position: absolute;
+            width: 65px; 
+            height: 65px;
+            border-radius: 50%; 
+            border: 2px solid #ff80b3; 
+            box-shadow: 0 0 15px #ff007f; 
+            object-fit: cover; 
+            object-position: center;
+            opacity: 0; 
+        }
+
+        @keyframes fadeInOrbit { to { opacity: 1; } }
+
+        #main-content.start-anim .img1 { animation: orbit1 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+        #main-content.start-anim .img2 { animation: orbit2 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+        #main-content.start-anim .img3 { animation: orbit3 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+        #main-content.start-anim .img4 { animation: orbit4 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+        #main-content.start-anim .img5 { animation: orbit5 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+
+        @keyframes orbit1 {
+            from { transform: rotate(0deg) translateX(130px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
+        }
+        @keyframes orbit2 {
+            from { transform: rotate(72deg) translateX(130px) rotate(-72deg); }
+            to { transform: rotate(432deg) translateX(130px) rotate(-432deg); }
+        }
+        @keyframes orbit3 {
+            from { transform: rotate(144deg) translateX(130px) rotate(-144deg); }
+            to { transform: rotate(504deg) translateX(130px) rotate(-504deg); }
+        }
+        @keyframes orbit4 {
+            from { transform: rotate(216deg) translateX(130px) rotate(-216deg); }
+            to { transform: rotate(576deg) translateX(130px) rotate(-576deg); }
+        }
+        @keyframes orbit5 {
+            from { transform: rotate(288deg) translateX(130px) rotate(-288deg); }
+            to { transform: rotate(648deg) translateX(130px) rotate(-648deg); }
+        }
+
+        /* --- TEKS PESAN --- */
+        .pesan {
+            margin-top: 30px;
+            color: #ffb3c6;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #ff007f;
+            z-index: 20;
+            opacity: 0; 
+        }
+
+        @keyframes fadeInPesan { to { opacity: 1; transform: translateY(-10px); } }
+
+        #main-content.start-anim .pesan {
+            animation: fadeInPesan 2s ease 4s forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <button id="start-button" onclick="mulaiHadiah()">Buka Hadiah dari [betterflyuu]</button>
+    </div>
+
+    <button id="music-control" onclick="toggleMusic()">⏸️</button>
+
+    <div id="main-content">
+        <div class="love-wrapper">
+            <div class="heart-container">
+                <svg viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff007f" /> 
+                            <stop offset="50%" stop-color="#ff4d4d" /> 
+                            <stop offset="100%" stop-color="#ff80b3" /> 
+                        </linearGradient>
+                    </defs>
+                    <path class="heart-path" d="M50 88.9l-6.5-5.9C21.7 64 8 51.5 8 36.1 8 23.6 17.8 13.8 30.3 13.8c7.1 0 13.9 3.3 18.2 8.5 4.3-5.2 11.1-8.5 18.2-8.5 12.5 0 22.3 9.8 22.3 22.3 0 15.4-13.7 27.9-35.5 46.9L50 88.9z" />
+                </svg>
+            </div>
+
+            <img src="foto1.jpg.png" alt="Memory 1" class="orbit-img img1">
+            <img src="foto2.jpg.png" alt="Memory 2" class="orbit-img img2">
+            <img src="foto3.jpg.png" alt="Memory 3" class="orbit-img img3">
+            <img src="foto4.jpg.png" alt="Memory 4" class="orbit-img img4">
+            <img src="foto5.jpg.png" alt="Memory 5" class="orbit-img img5">
+        </div>
+
+        <div class="pesan">I Love You, Sayang ❤️</div>
+    </div>
+
+    <audio id="myLagu" src="lagu.mp3.mp3" loop></audio>
+
+    <script>
+        const lagu = document.getElementById('myLagu');
+        const musicBtn = document.getElementById('music-control');
+        let isPlaying = false; // Status musik
+
+        function mulaiHadiah() {
+            const overlay = document.getElementById('overlay');
+            const content = document.getElementById('main-content');
+
+            overlay.style.opacity = '0';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                content.style.opacity = '1';
+                
+                // Tampilkan tombol musik
+                musicBtn.style.opacity = '1'; 
+                
+                content.classList.add('start-anim');
+                
+                // Play musik dan ubah status
+                lagu.play().then(() => {
+                    isPlaying = true;
+                    musicBtn.innerText = '⏸️'; // Icon Pause
+                }).catch(error => {
+                    console.log("Browser memblokir autoplay audio.", error);
+                    // Kalau gagal play otomatis, ubah icon jadi play
+                    musicBtn.innerText = '🎵'; 
+                });
+            }, 1000);
+        }
+
+        // Fungsi baru untuk Play/Pause musik
+        function toggleMusic() {
+            if (isPlaying) {
+                lagu.pause();
+                musicBtn.innerText = '🎵'; // Ganti icon jadi nada
+                isPlaying = false;
+            } else {
+                lagu.play();
+                musicBtn.innerText = '⏸️'; // Ganti icon jadi pause
+                isPlaying = true;
+            }
+        }
+    </script>
+
+</body>
+</html>
