@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        /* Background gelap pekat kemerahan */
+        body {
+            background-color: #0a0005; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Ruang Utama (Bungkus Love dan Foto Orbit) */
+        .love-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 350px;
+            height: 350px;
+        }
+
+        /* Ruang untuk si Love */
+        .heart-container {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            z-index: 10; /* Biar Love-nya selalu di depan foto */
+            animation: heartbeat 1.5s ease-in-out 4s infinite;
+        }
+
+        /* Desain Garis dan Isi Love */
+        .heart-path {
+            fill: transparent; 
+            stroke: url(#pinkGradient); 
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            
+            stroke-dasharray: 300; 
+            stroke-dashoffset: 300; 
+            
+            animation: 
+                drawOutline 3s ease-in-out forwards,
+                fillColor 2s ease-in-out 2.5s forwards;
+        }
+
+        @keyframes drawOutline { to { stroke-dashoffset: 0; } }
+        @keyframes fillColor { to { fill: url(#pinkGradient); } }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px #ff007f); }
+            15% { transform: scale(1.15); filter: drop-shadow(0 0 30px #ff007f); }
+            30% { transform: scale(1); filter: drop-shadow(0 0 15px #ff007f); }
+            45% { transform: scale(1.15); filter: drop-shadow(0 0 30px #ff007f); }
+        }
+
+        /* --- SISTEM FOTO MENGORBIT --- */
+        .orbit-img {
+            position: absolute;
+            width: 65px; /* Ukuran foto */
+            height: 65px;
+            border-radius: 50%; /* Bikin fotonya bulat */
+            border: 2px solid #ff80b3; /* Garis tepi pink soft */
+            box-shadow: 0 0 15px #ff007f; /* Efek glow */
+            object-fit: cover; /* Biar fotonya gak gepeng */
+            
+            /* Sembunyikan dulu di awal, biar muncul bareng teksnya */
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        /* Membagi 5 foto secara melingkar (72 derajat tiap foto) dan durasi putar 20 detik */
+        .img1 { animation: orbit1 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+        .img2 { animation: orbit2 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+        .img3 { animation: orbit3 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+        .img4 { animation: orbit4 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+        .img5 { animation: orbit5 20s linear infinite, fadeInOrbit 2s ease 4s forwards; }
+
+        @keyframes fadeInOrbit { to { opacity: 1; } }
+
+        /* Jarak orbit dari tengah adalah 130px */
+        @keyframes orbit1 {
+            from { transform: rotate(0deg) translateX(130px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
+        }
+        @keyframes orbit2 {
+            from { transform: rotate(72deg) translateX(130px) rotate(-72deg); }
+            to { transform: rotate(432deg) translateX(130px) rotate(-432deg); }
+        }
+        @keyframes orbit3 {
+            from { transform: rotate(144deg) translateX(130px) rotate(-144deg); }
+            to { transform: rotate(504deg) translateX(130px) rotate(-504deg); }
+        }
+        @keyframes orbit4 {
+            from { transform: rotate(216deg) translateX(130px) rotate(-216deg); }
+            to { transform: rotate(576deg) translateX(130px) rotate(-576deg); }
+        }
+        @keyframes orbit5 {
+            from { transform: rotate(288deg) translateX(130px) rotate(-288deg); }
+            to { transform: rotate(648deg) translateX(130px) rotate(-648deg); }
+        }
+
+        /* Teks Pesan Rahasia di bawahnya */
+        .pesan {
+            margin-top: 30px;
+            color: #ffb3c6;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            opacity: 0; 
+            text-shadow: 0 0 10px #ff007f;
+            animation: fadeInPesan 2s ease 4s forwards; 
+            z-index: 20;
+        }
+
+        @keyframes fadeInPesan { to { opacity: 1; transform: translateY(-10px); } }
+    </style>
+</head>
+<body>
+
+    <div class="love-wrapper">
+        <div class="heart-container">
+            <svg viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff007f" /> 
+                        <stop offset="50%" stop-color="#ff4d4d" /> 
+                        <stop offset="100%" stop-color="#ff80b3" /> 
+                    </linearGradient>
+                </defs>
+                <path class="heart-path" d="M50 88.9l-6.5-5.9C21.7 64 8 51.5 8 36.1 8 23.6 17.8 13.8 30.3 13.8c7.1 0 13.9 3.3 18.2 8.5 4.3-5.2 11.1-8.5 18.2-8.5 12.5 0 22.3 9.8 22.3 22.3 0 15.4-13.7 27.9-35.5 46.9L50 88.9z" />
+            </svg>
+        </div>
+
+        <img src="foto1.jpg.png" alt="Memory 1" class="orbit-img img1">
+        <img src="foto2.jpg.png" alt="Memory 2" class="orbit-img img2">
+        <img src="foto3.jpg.png" alt="Memory 3" class="orbit-img img3">
+        <img src="foto4.jpg.png" alt="Memory 4" class="orbit-img img4">
+        <img src="foto5.jpg.png" alt="Memory 5" class="orbit-img img5">
+    </div>
+
+    <div class="pesan">I Love You, Sayang ❤️</div>
+
+</body>
+</html>
