@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        /* Background gelap pekat kemerahan biar pink-nya nyala ala premium */
+        body {
+            background-color: #0a0005; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Ruang untuk si Love */
+        .heart-container {
+            width: 150px;
+            height: 150px;
+            /* Animasi detak jantung looping, mulai SETELAH gambar selesai (detik ke-4) */
+            animation: heartbeat 1.5s ease-in-out 4s infinite;
+        }
+
+        /* Desain Garis dan Isi Love */
+        .heart-path {
+            fill: transparent; /* Awalnya tengahnya bolong */
+            stroke: url(#pinkGradient); /* Garis tepinya pakai gradient pink */
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            
+            /* Trik Ilusi: Ini yang bikin garisnya seolah menggambar sendiri */
+            stroke-dasharray: 300; 
+            stroke-dashoffset: 300; 
+            
+            /* Jalanin 2 animasi berurutan: 
+               1. Gambar garis selama 3 detik
+               2. Isi warna ke dalam love setelah 2.5 detik */
+            animation: 
+                drawOutline 3s ease-in-out forwards,
+                fillColor 2s ease-in-out 2.5s forwards;
+        }
+
+        /* Keyframes Gambar Garis */
+        @keyframes drawOutline {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Keyframes Isi Warna */
+        @keyframes fillColor {
+            to { fill: url(#pinkGradient); }
+        }
+
+        /* Keyframes Detak Jantung + Efek Glow */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px #ff007f); }
+            15% { transform: scale(1.15); filter: drop-shadow(0 0 30px #ff007f); }
+            30% { transform: scale(1); filter: drop-shadow(0 0 15px #ff007f); }
+            45% { transform: scale(1.15); filter: drop-shadow(0 0 30px #ff007f); }
+        }
+
+        /* Teks Pesan Rahasia di bawahnya */
+        .pesan {
+            margin-top: 40px;
+            color: #ffb3c6;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            opacity: 0; /* Disembunyikan dulu */
+            text-shadow: 0 0 10px #ff007f;
+            /* Muncul pelan-pelan setelah love-nya jadi */
+            animation: fadeInPesan 2s ease 4s forwards; 
+        }
+
+        @keyframes fadeInPesan {
+            to { opacity: 1; transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-container">
+        <svg viewBox="0 0 100 100">
+            <defs>
+                <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff007f" /> <stop offset="50%" stop-color="#ff4d4d" /> <stop offset="100%" stop-color="#ff80b3" /> </linearGradient>
+            </defs>
+            <path class="heart-path" d="M50 88.9l-6.5-5.9C21.7 64 8 51.5 8 36.1 8 23.6 17.8 13.8 30.3 13.8c7.1 0 13.9 3.3 18.2 8.5 4.3-5.2 11.1-8.5 18.2-8.5 12.5 0 22.3 9.8 22.3 22.3 0 15.4-13.7 27.9-35.5 46.9L50 88.9z" />
+        </svg>
+    </div>
+
+    <div class="pesan">I Love You, Sayang ❤️</div>
+
+</body>
+</html>
